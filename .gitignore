@@ -1,0 +1,71 @@
+# gitignore for Java + Spring Boot + Maven (Windows)
+
+# Maven build
+/target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+# keep maven wrapper jar committed
+!/.mvn/wrapper/maven-wrapper.jar
+
+# Build outputs (other tools)
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# IDEs: IntelliJ, Eclipse/STS, NetBeans, VSCode
+/.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.classpath
+.project
+.settings/
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temp
+*.log
+logs/
+*.log.*
+*.tmp
+*.swp
+*~
+*.bak
+tmp/
+run/
+
+# Secrets / local config / keystores
+*.env
+.env.*
+application-*.local.properties
+application-*.local.yml
+secrets.*
+secret.*
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.crt
+*.key
+src/main/resources/application.properties
+
+# Compiled files
+*.class
+
+# Optional: ignore IDE-specific run configs or generated files
+.idea_modules/
