@@ -15,15 +15,16 @@ public class Order {
     private Long id;
 
     private String customerName;
+    private String customerPhone;
     private String customerAddress;
+
     private Double totalValue;
-    private String status; // Ex: "PENDENTE", "PREPARANDO", "ENTREGUE"
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "tenant_id")
     private Tenant tenant;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
 }
