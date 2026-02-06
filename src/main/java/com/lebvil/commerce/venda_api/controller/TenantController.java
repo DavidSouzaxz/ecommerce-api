@@ -2,14 +2,20 @@ package com.lebvil.commerce.venda_api.controller;
 
 import com.lebvil.commerce.venda_api.entitys.Tenant;
 import com.lebvil.commerce.venda_api.repository.TenantRepository;
+import com.lebvil.commerce.venda_api.services.TenantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tenants")
 public class TenantController {
+
+    @Autowired
+    private TenantService tenantService;
 
     @Autowired
     private TenantRepository tenantRepository;
@@ -27,6 +33,15 @@ public class TenantController {
     @GetMapping("/{slug}")
     public Tenant findBySlug(@PathVariable String slug) {
         return tenantRepository.findBySlug(slug).orElseThrow(() -> new RuntimeException("Loja not found"));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Tenant> updateTenant(@PathVariable Long id, @RequestBody Tenant updates) {
+        Tenant updated = tenantService.updateTenant(id, updates);
+        if (updated == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updated);
     }
 
 }

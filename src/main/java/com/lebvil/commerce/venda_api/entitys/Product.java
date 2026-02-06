@@ -17,6 +17,8 @@ public class Product {
     private Double price;
     private String imageUrl;
 
+    private Boolean available = true;
+
     @ManyToOne
     @JoinColumn(name = "tenant_id", nullable = false)
     private Tenant tenant;
