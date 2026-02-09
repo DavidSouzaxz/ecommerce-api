@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -44,4 +45,16 @@ public class TenantController {
         return ResponseEntity.ok(updated);
     }
 
+    @PatchMapping("/{slug}/status")
+    public ResponseEntity<Void> toggleStatus(@PathVariable String slug) {
+
+        Tenant tenant = tenantRepository.findBySlug(slug)
+                .orElseThrow(() -> new RuntimeException("Tenant não encontrado"));
+        LocalDateTime now = LocalDateTime.now();
+
+
+        tenant.setOpen(!tenant.isOpen());
+        tenantRepository.save(tenant);
+        return ResponseEntity.ok().build();
+    }
 }

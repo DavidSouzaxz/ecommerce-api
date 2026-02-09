@@ -17,11 +17,15 @@ public class TenantService {
         return tenantRepository.findById(id).orElseThrow(() -> new RuntimeException("Tenant not found"));
     }
 
+
+
     public Tenant updateTenant(Long id, Tenant updatedTenant) {
         return tenantRepository.findById(id).map(tenant -> {
             tenant.setName(updatedTenant.getName());
             tenant.setPrimaryColor(updatedTenant.getPrimaryColor());
             tenant.setLogoUrl(updatedTenant.getLogoUrl());
+            tenant.setCloseTime(updatedTenant.getCloseTime());
+            tenant.setOpenTime(updatedTenant.getOpenTime());
             return tenantRepository.save(tenant);
         }).orElseThrow(() -> new RuntimeException("Tenant not found"));
     }
