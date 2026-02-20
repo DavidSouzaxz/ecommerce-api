@@ -1,6 +1,8 @@
 package com.lebvil.commerce.venda_api.controller;
 
+import com.lebvil.commerce.venda_api.entitys.Tenant;
 import com.lebvil.commerce.venda_api.entitys.User;
+import com.lebvil.commerce.venda_api.repository.TenantRepository;
 import com.lebvil.commerce.venda_api.repository.UserRepository;
 import com.lebvil.commerce.venda_api.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
+    private TenantRepository tenantRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
@@ -35,7 +40,16 @@ public class AuthController {
             
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
-            response.put("tenantSlug", user.getTenant().getSlug());
+            response.put("user", user.getId().toString());
+            Tenant tenant;
+            if (tenantRepository.existsByUserId(user.getId())) {
+                tenant = tenantRepository.findByUserId(user.getId()).orElseThrow(() -> new RuntimeException("Tenant not found"));
+                response.put("tenantSlug", tenant.getSlug());
+            } else {
+                response.put("tenantSlug", null);
+            }
+
+
             
             return ResponseEntity.ok(response);
         }

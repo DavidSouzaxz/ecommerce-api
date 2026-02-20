@@ -12,12 +12,12 @@ public class User {
     private Long id;
 
     @Column(unique = true)
+    private String username;
     private String email;
     private String password;
 
     private  String role;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
-    private Tenant tenant;
+
+
 }

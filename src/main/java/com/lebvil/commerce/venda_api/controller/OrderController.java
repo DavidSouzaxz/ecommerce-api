@@ -39,7 +39,6 @@ public class OrderController {
             throw new RuntimeException("Tenant não informado");
         }
 
-        // Verifica se a loja está habilitada e dentro do horário definido (isStoreOpen já trata openTime/closeTime nulos)
         if (!tenant.isOpen() || !tenant.isStoreOpen()) {
             throw new RuntimeException("Loja fechada no momento!");
         }

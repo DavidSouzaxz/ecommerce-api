@@ -28,7 +28,7 @@ public class TenantController {
 
     @PostMapping
     public Tenant create(@RequestBody Tenant tenant) {
-        return tenantRepository.save(tenant);
+        return tenantService.create(tenant);
     }
 
     @GetMapping("/{slug}")

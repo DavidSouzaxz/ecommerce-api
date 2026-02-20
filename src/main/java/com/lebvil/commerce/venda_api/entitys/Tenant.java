@@ -1,5 +1,6 @@
 package com.lebvil.commerce.venda_api.entitys;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -21,6 +22,7 @@ public class Tenant {
     @Column(unique = true, nullable = false)
     private String slug;
 
+    @JsonAlias("color")
     private String primaryColor;
 
     private String logoUrl;
@@ -41,4 +43,8 @@ public class Tenant {
     @Column(name = "is_open", nullable = false)
     @ColumnDefault("true")
     private boolean isOpen = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
