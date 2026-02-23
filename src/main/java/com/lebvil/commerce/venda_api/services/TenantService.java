@@ -3,6 +3,7 @@ package com.lebvil.commerce.venda_api.services;
 import com.lebvil.commerce.venda_api.entitys.Tenant;
 import com.lebvil.commerce.venda_api.repository.TenantRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,12 +21,16 @@ public class TenantService {
     }
 
     public Tenant create(Tenant tenant) {
-        // Se um usuário foi informado no corpo, checa se ele já possui uma loja
         if (tenant.getUser() != null && tenant.getUser().getId() != null) {
             Long userId = tenant.getUser().getId();
             if (tenantRepository.existsByUserId(userId)) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "This user already has a store");
             }
+        }
+
+        Tenant existingTenant = tenantRepository.findBySlug(tenant.getSlug()).orElse(null);
+        if(existingTenant != null) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(409), "Slug already exists");
         }
 
         return tenantRepository.save(tenant);
